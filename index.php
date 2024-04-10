@@ -1,50 +1,50 @@
 <?php
-
 echo '<pre>' . print_r($_POST, true) . '</pre>';
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $message = $_POST['message'];
-        $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+    $password = $_POST['password'];
 
-        $errors = [];
+    $errors = [];
 
-        if (empty($name)) {
-            $errors['name'] = 'Name is required';
-        }
-
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['email'] = 'Invalid email';
-        }
-
-        if (empty($message)) {
-            $errors['message'] = 'Message is required';
-        }
-
-        if (empty($password)) {
-            $errors['password'] = 'Password is required';
-        } elseif (strlen($password) < 12) {
-            $errors['password'] = 'Password must be at least 12 characters long';
-        } elseif (!preg_match('/[0-9]/', $password)) {
-            $errors['password'] = 'Password must contain at least one number';
-        }
-
-        if (!empty($errors)) {
-            echo '<div class="alert alert-danger">';
-
-            foreach ($errors as $error) {
-                echo '<p class="error">' . $error . '</p>';
-            }
-            
-
-            if ($errors == []) {
-                header('Location: /Backend/U4/U4-S1/U4-S1-G2/success.php');
-            } else {
-                echo "Error sending email";
-            }
-        }
+    if (empty($name)) {
+        $errors['name'] = 'Name is required';
     }
+
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors['email'] = 'Invalid email';
+    }
+
+    if (empty($message)) {
+        $errors['message'] = 'Message is required';
+    }
+
+    if (empty($password)) {
+        $errors['password'] = 'Password is required';
+    } elseif (strlen($password) < 12) {
+        $errors['password'] = 'Password must be at least 12 characters long';
+    } elseif (!preg_match('/[0-9]/', $password)) {
+        $errors['password'] = 'Password must contain at least one number';
+    }
+
+    // Controlla se ci sono errori
+    if (!empty($errors)) {
+        // Se ci sono errori, li visualizza
+        echo '<div class="alert alert-danger">';
+
+        foreach ($errors as $error) {
+            echo '<p class="error">' . $error . '</p>';
+        }
+
+        echo '</div>';
+    } else {
+        // Se non ci sono errori, reindirizza alla pagina di successo
+        header('Location: /Backend/U4/U4-S1/U4-S1-G2/success.php');
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
