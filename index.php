@@ -30,10 +30,13 @@ echo '<pre>' . print_r($_POST, true) . '</pre>';
             $errors['password'] = 'Password must contain at least one number';
         }
 
-        if (empty($errors)) {
-            $to = "marco_p2009@live.it"; 
-            $subject = "New Contact Form Submission";
-            $body = "Name: $name\nEmail: $email\nMessage: $message\nPassword: $password";
+        if (!empty($errors)) {
+            echo '<div class="alert alert-danger">';
+
+            foreach ($errors as $error) {
+                echo '<p class="error">' . $error . '</p>';
+            }
+            
 
             if ($errors == []) {
                 header('Location: /Backend/U4/U4-S1/U4-S1-G2/success.php');
